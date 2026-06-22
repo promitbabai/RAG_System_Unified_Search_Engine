@@ -1,0 +1,44 @@
+fastapi-user-service-production/
+
+Endpoint from Localhost => http://127.0.0.1:8000/docs
+
+
+├── app/
+│   ├── main.py
+│   ├── api/
+│   │   └── controllers/
+│   │       └── user_controller.py
+│   ├── core/
+│   │   ├── config.py
+│   │   └── logging_config.py
+│   ├── dao/
+│   │   └── user_dao.py
+│   ├── exceptions/
+│   │   ├── custom_exceptions.py
+│   │   └── exception_handlers.py
+│   ├── models/
+│   │   └── user.py
+│   ├── schemas/
+│   │   └── user_schema.py
+│   └── services/
+│       └── user_service.py
+├── tests/
+│   └── test_user_api.py
+├── requirements.txt
+├── requirements-dev.txt
+├── .gitignore
+└── README.md
+
+Run tests
+Install test dependencies:
+------------------------------------
+pip install -r requirements-dev.txt
+
+pytest
+
+
+
+RUN THE PYTHON APP
+----------------------
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
