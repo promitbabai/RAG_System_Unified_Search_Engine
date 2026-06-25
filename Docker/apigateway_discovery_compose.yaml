@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  consul:
+    container_name: service_discovery
+    image: consul:1.15.4
+    command: agent -dev -client=0.0.0.0
+    ports:
+      - "8500:8500"
+    networks:
+      - core
+
+  traefik:
+    container_name: api_gateway
+    image: traefik:v2.10
+    command:
+      - "--providers.consulcatalog=true"
+      - "--providers.consulcatalog.endpoint.address=consul:8500"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - 8082:80
+    depends_on:
+      - consul
+    networks:
+      - core
+
+networks:
+  core:
+    driver: bridge

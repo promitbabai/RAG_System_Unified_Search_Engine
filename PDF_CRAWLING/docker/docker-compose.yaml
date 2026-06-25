@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  faster_api:
+    container_name: faster_api
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    networks:
+      - core
+
+networks:
+  core:
+    driver: bridge
