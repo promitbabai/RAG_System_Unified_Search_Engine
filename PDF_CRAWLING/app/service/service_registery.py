@@ -31,9 +31,6 @@ async def lifespan(app: FastAPI):
 
     consul_client.agent.service.deregister(settings.SERVICE_ID)
 
-
-
-app = FastAPI(lifespan=lifespan)
 def get_ip():
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
