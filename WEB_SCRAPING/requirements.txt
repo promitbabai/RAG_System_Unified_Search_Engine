@@ -1,10 +1,10 @@
-
 fastapi
 uvicorn[standard]
-requests
 httpx
 beautifulsoup4
 pydantic
 pytest
 pytest-asyncio
+requests
+
 
