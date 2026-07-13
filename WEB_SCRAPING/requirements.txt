@@ -6,5 +6,7 @@ pydantic
 pytest
 pytest-asyncio
 requests
+langchain-text-splitters
+chromadb
 
 

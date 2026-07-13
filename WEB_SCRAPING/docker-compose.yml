@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # ChromaDB Vector Database Service
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: chromadb-promit
+    ports:
+      - "8000:8000"  # Map container port 8000 to host port 8000
+    volumes:
+      - chroma-data-promit-volume:/data  # Persist ChromaDB data
+    environment:
+      - IS_PERSISTENT=TRUE
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    networks:
+      - web-scraping-network
+
+
+volumes:
+  chroma-data-promit-volume:
+    driver: local
+
+networks:
+  web-scraping-network:
+    driver: bridge
+

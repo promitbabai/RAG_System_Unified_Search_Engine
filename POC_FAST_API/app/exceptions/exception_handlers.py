@@ -4,7 +4,11 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 
-from app.exceptions.custom_exceptions import UserNotFoundException
+from app.exceptions.custom_exceptions import (
+    UserNotFoundException,
+    InvalidWikipediaURLException,
+    WikipediaScrapingException,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +23,28 @@ def register_exception_handlers(app: FastAPI) -> None:
             status_code=status.HTTP_404_NOT_FOUND,
             content={
                 "error_code": "USER_NOT_FOUND",
+                "message": exc.message,
+            },
+        )
+
+    @app.exception_handler(InvalidWikipediaURLException)
+    async def invalid_wikipedia_url_exception_handler(request: Request, exc: InvalidWikipediaURLException):
+        logger.warning("Handled InvalidWikipediaURLException: %s", exc.message)
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "error_code": "INVALID_WIKIPEDIA_URL",
+                "message": exc.message,
+            },
+        )
+
+    @app.exception_handler(WikipediaScrapingException)
+    async def wikipedia_scraping_exception_handler(request: Request, exc: WikipediaScrapingException):
+        logger.warning("Handled WikipediaScrapingException: %s", exc.message)
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "error_code": "WIKIPEDIA_SCRAPING_ERROR",
                 "message": exc.message,
             },
         )

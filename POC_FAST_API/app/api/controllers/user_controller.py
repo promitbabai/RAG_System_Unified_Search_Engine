@@ -21,7 +21,8 @@ def get_user_service(user_dao: UserDAO = Depends(get_user_dao)) -> UserService:
 
 
 @router.get(
-    "/users",
+    "/"
+    "",
     response_model=List[UserResponse],
     status_code=status.HTTP_200_OK,
     summary="Get list of users",
