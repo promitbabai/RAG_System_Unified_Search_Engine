@@ -3,9 +3,13 @@ import chromadb
 from typing import List, Optional
 
 # ChromaDB client initialization
-# Automatically connects to ChromaDB service running in Docker
-chroma_url = os.getenv("CHROMA_DB_URL", "http://chromadb:8000")
-client = chromadb.HttpClient(host=chroma_url.replace("http://", "").split(":")[0], port=int(chroma_url.split(":")[-1]))
+# Use environment variable for Docker, fallback to localhost for local development
+chroma_url = os.getenv("CHROMA_DB_URL", "http://localhost:8000")
+host = chroma_url.replace("http://", "").replace("https://", "").split(":")[0]
+port = int(chroma_url.split(":")[-1]) if ":" in chroma_url else 8000
+
+print(f"Connecting to ChromaDB at {host}:{port}")
+client = chromadb.HttpClient(host=host, port=port)
 
 
 class ChromaDBService:
@@ -52,17 +56,20 @@ class ChromaDBService:
 
         return {"status": "success", "id": doc_id, "url": url}
 
+
+
+    """
+    Search for similar content in ChromaDB
+
+            Args:
+                query: Search query
+                n_results: Number of results to return
+
+            Returns:
+                List of matching documents with metadata
+    """
     def search_content(self, query: str, n_results: int = 5) -> List[dict]:
-        """
-        Search for similar content in ChromaDB
 
-        Args:
-            query: Search query
-            n_results: Number of results to return
-
-        Returns:
-            List of matching documents with metadata
-        """
         if not self.collection:
             raise Exception("ChromaDB collection not initialized")
 
@@ -73,8 +80,11 @@ class ChromaDBService:
 
         return results
 
+
+
+    """Get collection statistics"""
     def get_stats(self) -> dict:
-        """Get collection statistics"""
+
         if not self.collection:
             return {"error": "ChromaDB not initialized"}
 

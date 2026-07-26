@@ -7,6 +7,19 @@ router = APIRouter(
     prefix="/scrapenhance",
     tags=["Scrapenhance"]
 )
+# http://127.0.0.1:8000/scrapenhance/?url=https://www.incometax.gov.in/iec/foportal/
+# http://127.0.0.1:8000/scrapper/?url=https://www.incometax.gov.in/iec/foportal/   - SCRAPED SUCCESSFULLY
+# http://127.0.0.1:8000/scrapper/?url=https://wb.gov.in/   - SCRAPED SUCCESSFULLY
+# http://127.0.0.1:8000/scrapper/?url=https://www.india.gov.in/my-government/schemes - SCRAPED SUCCESSFULLY
+# http://127.0.0.1:8000/scrapper/?url=https://rickcarlino.medium.com/fabulous-text-only-websites-cb17012d2d24 - SCRAPED SUCCESSFULLY
+# http://127.0.0.1:8000/scrapper/?url=https://uidai.gov.in/en/about-uidai/legal-framework/rules.html
+# https://www.wikipedia.org/
+# https://www.incometax.gov.in/iec/foportal/
+# https://uidai.gov.in/en/
+# http://127.0.0.1:8000/scrapper/?url=https://www.tesco.com/?srsltid=AfmBOorQo-DKmXxr9ls-GVn5xlYjwdyLMG32RUtleI6kRi3AtRdItKeP
+# http://localhost:8000
+# http://127.0.0.1:8000/scrapper/?url=https://sports.ndtv.com/fifa-world-cup-2026/michael-olise-the-bayern-munich-hero-driving-frances-dream-of-world-cup-glory-11710908?pfrom=home-ndtv_fifa
+
 
 
 class ScrapeAndStoreRequest(BaseModel):

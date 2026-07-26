@@ -11,14 +11,24 @@ services:
       - chroma-data-promit-volume:/data  # Persist ChromaDB data
     environment:
       - IS_PERSISTENT=TRUE
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
     networks:
       - web-scraping-network
+
+  # FastAPI Web Scraping Service
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi-web-scraping
+    ports:
+      - "8001:8000"  # Map container port 8000 to host port 8001
+    environment:
+      - CHROMA_DB_URL=http://chromadb:8000
+    depends_on:
+      - chromadb
+    networks:
+      - web-scraping-network
+    restart: unless-stopped
 
 
 volumes:
