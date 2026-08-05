@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from app.api.controllers.user_controller import router as user_router
 from app.api.controllers.wikipedia_controller import router as wikipedia_router
+from app.api.controllers.query_controller import router as query_router
 from app.core.config import settings
 from app.core.logging_config import configure_logging
 from app.exceptions.exception_handlers import register_exception_handlers
@@ -21,6 +22,7 @@ def create_app() -> FastAPI:
 
     app.include_router(user_router, prefix=settings.API_PREFIX, tags=["Users"])
     app.include_router(wikipedia_router, prefix=settings.API_PREFIX + "/wikipedia", tags=["Wikipedia"])
+    app.include_router(query_router, prefix=settings.API_PREFIX + "/chroma", tags=["Wikipedia"])
 
     @app.get("/health", tags=["Health"])
     def health_check():

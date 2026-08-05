@@ -24,6 +24,23 @@ services:
     networks:
       - core
 
+
+  chromadb:
+    image: chromadb/chroma:1.5.9
+    container_name: chromadb
+    ports:
+      - "8010:8000"
+    volumes:
+      - ./chroma_data:/chroma/chroma
+      - ./chroma_data/data:/data
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+      - ALLOW_RESET=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    restart: unless-stopped
+    networks:
+      - core
 networks:
   core:
     driver: bridge
